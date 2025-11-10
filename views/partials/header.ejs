@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Teacher Platform' %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Teacher Platform</span>
+                </div>
+                <nav class="nav">
+                    <a href="/" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="/lessons" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'lessons' ? 'active' : '' %>">
+                        <i class="fas fa-book"></i> Lessons
+                    </a>
+                    <a href="/news" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'news' ? 'active' : '' %>">
+                        <i class="fas fa-newspaper"></i> News
+                    </a>
+                    <a href="/qa" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'qa' ? 'active' : '' %>">
+                        <i class="fas fa-question-circle"></i> Q&A
+                    </a>
+                    <% if (typeof session !== 'undefined' && session.userId && session.role === 'admin') { %>
+                    <a href="/admin" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'admin' ? 'active' : '' %>">
+                        <i class="fas fa-user-shield"></i> Admin
+                    </a>
+                    <% } else { %>
+                    <a href="/admin/login" class="nav-link">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <% } %>
+                </nav>
+            </div>
+        </div>
+    </header>
+

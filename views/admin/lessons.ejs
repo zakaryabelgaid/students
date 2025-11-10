@@ -1,0 +1,81 @@
+<%- include('../partials/header', { title: 'Manage Lessons - Teacher Platform', currentPage: 'admin' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-book"></i> Manage Lessons</h1>
+            <a href="/admin" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <div class="admin-content">
+            <div class="admin-form-section">
+                <div class="card">
+                    <h2>Create New Lesson</h2>
+                    <form action="/admin/lessons" method="POST" enctype="multipart/form-data" class="admin-form">
+                        <div class="form-group">
+                            <label for="title">Lesson Title</label>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Content</label>
+                            <textarea id="content" name="content" rows="10" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="level">Level</label>
+                                <select id="level" name="level" required>
+                                    <option value="1">First Year</option>
+                                    <option value="2">Second Year</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <input type="text" id="category" name="category" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="files">Lesson Materials (PDF, Images, Videos)</label>
+                            <input type="file" id="files" name="files" multiple accept=".pdf,.jpg,.jpeg,.png,.gif,.mp4,.webm">
+                            <small>You can select multiple files (max 50MB each)</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Create Lesson
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="admin-list-section">
+                <h2>All Lessons</h2>
+                <% if (lessons && lessons.length > 0) { %>
+                    <div class="admin-list">
+                        <% lessons.forEach(lesson => { %>
+                        <div class="admin-item">
+                            <div class="admin-item-content">
+                                <h3><%= lesson.title %></h3>
+                                <p>
+                                    <span class="badge level-<%= lesson.level %>"><%= lesson.level === 1 ? 'First Year' : 'Second Year' %></span>
+                                    <span class="badge"><%= lesson.category %></span>
+                                    <span><%= lesson.files.length %> files</span>
+                                </p>
+                            </div>
+                            <div class="admin-item-actions">
+                                <a href="/lessons/<%= lesson._id %>" class="btn btn-sm btn-outline" target="_blank">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <p class="no-content">No lessons created yet.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

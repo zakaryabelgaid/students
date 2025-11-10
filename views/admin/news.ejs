@@ -1,0 +1,71 @@
+<%- include('../partials/header', { title: 'Manage News - Teacher Platform', currentPage: 'admin' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-newspaper"></i> Manage News</h1>
+            <a href="/admin" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <div class="admin-content">
+            <div class="admin-form-section">
+                <div class="card">
+                    <h2>Create New Article</h2>
+                    <form action="/admin/news" method="POST" class="admin-form">
+                        <div class="form-group">
+                            <label for="title">Article Title</label>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Content</label>
+                            <textarea id="content" name="content" rows="10" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <input type="text" id="category" name="category" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags">Tags (comma-separated)</label>
+                            <input type="text" id="tags" name="tags" placeholder="education, learning, tips">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Create Article
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="admin-list-section">
+                <h2>All Articles</h2>
+                <% if (news && news.length > 0) { %>
+                    <div class="admin-list">
+                        <% news.forEach(article => { %>
+                        <div class="admin-item">
+                            <div class="admin-item-content">
+                                <h3><%= article.title %></h3>
+                                <p>
+                                    <span class="badge"><%= article.category %></span>
+                                    <span><i class="fas fa-eye"></i> <%= article.views %> views</span>
+                                    <span><i class="fas fa-calendar"></i> <%= new Date(article.createdAt).toLocaleDateString() %></span>
+                                </p>
+                            </div>
+                            <div class="admin-item-actions">
+                                <a href="/news/<%= article._id %>" class="btn btn-sm btn-outline" target="_blank">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <p class="no-content">No articles created yet.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

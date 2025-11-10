@@ -1,0 +1,37 @@
+<%- include('../partials/header', { title: article.title + ' - Teacher Platform', currentPage: 'news' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="article-detail">
+            <div class="article-header">
+                <div class="news-category-badge"><%= article.category %></div>
+                <h1><%= article.title %></h1>
+                <p class="article-meta">
+                    <i class="fas fa-user"></i> <%= article.author.name %>
+                    <i class="fas fa-calendar"></i> <%= new Date(article.createdAt).toLocaleDateString() %>
+                    <i class="fas fa-eye"></i> <%= article.views %> views
+                </p>
+                <% if (article.tags && article.tags.length > 0) { %>
+                <div class="article-tags">
+                    <% article.tags.forEach(tag => { %>
+                    <span class="tag"><%= tag %></span>
+                    <% }); %>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="article-content">
+                <%= article.content.replace(/\n/g, '<br>') %>
+            </div>
+
+            <div class="article-actions">
+                <a href="/news" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to News
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

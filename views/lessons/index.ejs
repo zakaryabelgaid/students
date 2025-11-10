@@ -1,0 +1,85 @@
+<%- include('../partials/header', { title: 'Lessons - Teacher Platform', currentPage: 'lessons' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1>Lessons</h1>
+            <p>Explore our comprehensive lesson library</p>
+        </div>
+
+        <div class="level-tabs">
+            <a href="/lessons/level/1" class="tab-btn <%= typeof level !== 'undefined' && level === 1 ? 'active' : '' %>">
+                <i class="fas fa-seedling"></i> First Year
+            </a>
+            <a href="/lessons/level/2" class="tab-btn <%= typeof level !== 'undefined' && level === 2 ? 'active' : '' %>">
+                <i class="fas fa-rocket"></i> Second Year
+            </a>
+        </div>
+
+        <% if (typeof level !== 'undefined') { %>
+            <h2 class="section-title"><%= levelName %> Lessons</h2>
+            <div class="lessons-grid">
+                <% if (lessons && lessons.length > 0) { %>
+                    <% lessons.forEach(lesson => { %>
+                    <div class="lesson-card">
+                        <div class="lesson-badge level-<%= lesson.level %>">
+                            <%= lesson.level === 1 ? 'First Year' : 'Second Year' %>
+                        </div>
+                        <h3><%= lesson.title %></h3>
+                        <p class="lesson-category"><i class="fas fa-tag"></i> <%= lesson.category %></p>
+                        <p class="lesson-preview"><%= lesson.content.substring(0, 100) %>...</p>
+                        <div class="lesson-meta">
+                            <span><i class="fas fa-file"></i> <%= lesson.files.length %> files</span>
+                            <span><i class="fas fa-calendar"></i> <%= new Date(lesson.createdAt).toLocaleDateString() %></span>
+                        </div>
+                        <a href="/lessons/<%= lesson._id %>" class="btn btn-primary">View Lesson</a>
+                    </div>
+                    <% }); %>
+                <% } else { %>
+                    <p class="no-content">No lessons found for this level.</p>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="levels-container">
+                <div class="level-section">
+                    <h2><i class="fas fa-seedling"></i> First Year</h2>
+                    <div class="lessons-grid">
+                        <% if (typeof beginnerLessons !== 'undefined' && beginnerLessons && beginnerLessons.length > 0) { %>
+                            <% beginnerLessons.forEach(lesson => { %>
+                            <div class="lesson-card">
+                                <div class="lesson-badge level-1">First Year</div>
+                                <h3><%= lesson.title %></h3>
+                                <p class="lesson-category"><%= lesson.category %></p>
+                                <a href="/lessons/<%= lesson._id %>" class="btn btn-sm">View Lesson</a>
+                            </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="no-content">No first year lessons yet.</p>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="level-section">
+                    <h2><i class="fas fa-rocket"></i> Second Year</h2>
+                    <div class="lessons-grid">
+                        <% if (typeof advancedLessons !== 'undefined' && advancedLessons && advancedLessons.length > 0) { %>
+                            <% advancedLessons.forEach(lesson => { %>
+                            <div class="lesson-card">
+                                <div class="lesson-badge level-2">Second Year</div>
+                                <h3><%= lesson.title %></h3>
+                                <p class="lesson-category"><%= lesson.category %></p>
+                                <a href="/lessons/<%= lesson._id %>" class="btn btn-sm">View Lesson</a>
+                            </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="no-content">No second year lessons yet.</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

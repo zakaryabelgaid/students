@@ -1,0 +1,54 @@
+<%- include('../partials/header', { title: 'Manage Questions - Teacher Platform', currentPage: 'admin' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-question-circle"></i> Manage Questions</h1>
+            <div class="header-actions">
+                <div class="filter-tabs">
+                    <a href="?status=all" class="tab-btn <%= currentFilter === 'all' ? 'active' : '' %>">All</a>
+                    <a href="?status=pending" class="tab-btn <%= currentFilter === 'pending' ? 'active' : '' %>">
+                        Pending <% if (currentFilter === 'all' && pendingCount > 0) { %><span class="badge"><%= pendingCount %></span><% } %>
+                    </a>
+                    <a href="?status=answered" class="tab-btn <%= currentFilter === 'answered' ? 'active' : '' %>">Answered</a>
+                </div>
+                <a href="/admin" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="questions-admin-list">
+            <% if (questions && questions.length > 0) { %>
+                <% questions.forEach(question => { %>
+                <div class="question-admin-card">
+                    <div class="question-admin-header">
+                        <div>
+                            <h3><%= question.studentName %></h3>
+                            <p class="question-email"><i class="fas fa-envelope"></i> <%= question.studentEmail %></p>
+                            <p class="question-date"><i class="fas fa-calendar"></i> <%= new Date(question.createdAt).toLocaleDateString() %></p>
+                        </div>
+                        <span class="status-badge status-<%= question.status %>">
+                            <%= question.status === 'pending' ? 'Pending' : 'Answered' %>
+                        </span>
+                    </div>
+                    <div class="question-admin-content">
+                        <p><strong>Question:</strong></p>
+                        <p><%= question.question %></p>
+                    </div>
+                    <div class="question-admin-actions">
+                        <a href="/admin/questions/<%= question._id %>/gmail" class="btn btn-primary" target="_blank">
+                            <i class="fab fa-google"></i> Answer via Gmail
+                        </a>
+                    </div>
+                </div>
+                <% }); %>
+            <% } else { %>
+                <p class="no-content">No questions found.</p>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

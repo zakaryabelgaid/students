@@ -1,0 +1,56 @@
+<%- include('../partials/header', { title: 'News - Teacher Platform', currentPage: 'news' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1>News & Articles</h1>
+            <p>Stay updated with the latest news and educational content</p>
+        </div>
+
+        <div class="news-list">
+            <% if (news && news.length > 0) { %>
+                <% news.forEach(article => { %>
+                <div class="news-card-large">
+                    <div class="news-card-content">
+                        <div class="news-category-badge"><%= article.category %></div>
+                        <h2><%= article.title %></h2>
+                        <p class="news-meta">
+                            <i class="fas fa-user"></i> <%= article.author.name %>
+                            <i class="fas fa-calendar"></i> <%= new Date(article.createdAt).toLocaleDateString() %>
+                            <i class="fas fa-eye"></i> <%= article.views %> views
+                        </p>
+                        <p class="news-preview"><%= article.content.substring(0, 200) %>...</p>
+                        <div class="news-tags">
+                            <% if (article.tags && article.tags.length > 0) { %>
+                                <% article.tags.forEach(tag => { %>
+                                <span class="tag"><%= tag %></span>
+                                <% }); %>
+                            <% } %>
+                        </div>
+                        <a href="/news/<%= article._id %>" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+                <% }); %>
+
+                <div class="pagination">
+                    <% if (hasPrevPage) { %>
+                    <a href="?page=<%= currentPage - 1 %>" class="btn btn-outline">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </a>
+                    <% } %>
+                    <span class="page-info">Page <%= currentPage %> of <%= totalPages %></span>
+                    <% if (hasNextPage) { %>
+                    <a href="?page=<%= currentPage + 1 %>" class="btn btn-outline">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <p class="no-content">No news articles found.</p>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

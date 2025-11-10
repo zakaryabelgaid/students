@@ -1,0 +1,75 @@
+<%- include('../partials/header', { title: 'Q&A - Teacher Platform', currentPage: 'qa' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1>Questions & Answers</h1>
+            <p>Ask your questions and get answers from teachers</p>
+        </div>
+
+        <div class="qa-container">
+            <div class="qa-form-section">
+                <div class="card">
+                    <h2><i class="fas fa-question-circle"></i> Ask a Question</h2>
+                    
+                    <% if (success) { %>
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i> <%= success %>
+                    </div>
+                    <% } %>
+
+                    <% if (error) { %>
+                    <div class="alert alert-error">
+                        <i class="fas fa-exclamation-circle"></i> <%= error %>
+                    </div>
+                    <% } %>
+
+                    <form action="/qa" method="POST" class="qa-form">
+                        <div class="form-group">
+                            <label for="studentName">Your Name</label>
+                            <input type="text" id="studentName" name="studentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="studentEmail">Your Email</label>
+                            <input type="email" id="studentEmail" name="studentEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="question">Your Question</label>
+                            <textarea id="question" name="question" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Question
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="qa-list-section">
+                <h2><i class="fas fa-list"></i> Recent Questions</h2>
+                <% if (questions && questions.length > 0) { %>
+                    <div class="questions-list">
+                        <% questions.forEach(q => { %>
+                        <div class="question-card">
+                            <div class="question-header">
+                                <div class="question-meta">
+                                    <span class="question-author"><%= q.studentName %></span>
+                                    <span class="question-date"><%= new Date(q.createdAt).toLocaleDateString() %></span>
+                                </div>
+                                <span class="status-badge status-<%= q.status %>">
+                                    <%= q.status === 'pending' ? 'Pending' : 'Answered' %>
+                                </span>
+                            </div>
+                            <p class="question-text"><%= q.question %></p>
+                        </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <p class="no-content">No questions yet. Be the first to ask!</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

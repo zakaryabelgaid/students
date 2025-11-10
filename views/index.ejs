@@ -1,0 +1,90 @@
+<%- include('partials/header', { title: 'Home - Teacher Platform', currentPage: 'home' }) %>
+
+<main class="main-content">
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Teacher Platform</h1>
+                <p class="hero-subtitle">Your comprehensive learning and communication hub</p>
+                <div class="hero-buttons">
+                    <a href="/lessons" class="btn btn-primary">Explore Lessons</a>
+                    <a href="/qa" class="btn btn-secondary">Ask a Question</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Lessons</h3>
+                    <p>Access first year and second year lessons with downloadable materials</p>
+                    <a href="/lessons" class="btn btn-outline">View Lessons</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <h3>News & Articles</h3>
+                    <p>Stay updated with the latest news and educational articles</p>
+                    <a href="/news" class="btn btn-outline">Read News</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Q&A Forum</h3>
+                    <p>Ask questions and get answers from your teachers</p>
+                    <a href="/qa" class="btn btn-outline">Ask Question</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <% if (recentLessons && recentLessons.length > 0) { %>
+    <section class="recent-section">
+        <div class="container">
+            <h2 class="section-title">Recent Lessons</h2>
+            <div class="lessons-grid">
+                <% recentLessons.forEach(lesson => { %>
+                <div class="lesson-card">
+                    <div class="lesson-badge level-<%= lesson.level %>">
+                        <%= lesson.level === 1 ? 'First Year' : 'Second Year' %>
+                    </div>
+                    <h3><%= lesson.title %></h3>
+                    <p class="lesson-category"><%= lesson.category %></p>
+                    <a href="/lessons/<%= lesson._id %>" class="btn btn-sm">View Lesson</a>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+    <% } %>
+
+    <% if (recentNews && recentNews.length > 0) { %>
+    <section class="recent-section">
+        <div class="container">
+            <h2 class="section-title">Latest News</h2>
+            <div class="news-grid">
+                <% recentNews.forEach(article => { %>
+                <div class="news-card">
+                    <h3><%= article.title %></h3>
+                    <p class="news-meta">
+                        <i class="fas fa-calendar"></i> <%= new Date(article.createdAt).toLocaleDateString() %>
+                        <span class="news-category"><%= article.category %></span>
+                    </p>
+                    <a href="/news/<%= article._id %>" class="btn btn-sm">Read More</a>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+    <% } %>
+</main>
+
+<%- include('partials/footer') %>
+

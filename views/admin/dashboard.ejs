@@ -1,0 +1,114 @@
+<%- include('../partials/header', { title: 'Admin Dashboard - Teacher Platform', currentPage: 'admin' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="dashboard-header">
+            <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+            <p>Welcome back, <%= typeof session !== 'undefined' ? session.userName : 'Admin' %>!</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.totalLessons %></h3>
+                    <p>Total Lessons</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.totalNews %></h3>
+                    <p>News Articles</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.totalQuestions %></h3>
+                    <p>Total Questions</p>
+                </div>
+            </div>
+            <div class="stat-card stat-warning">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #ffd166 0%, #f77f00 100%);">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.pendingQuestions %></h3>
+                    <p>Pending Questions</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-actions">
+            <a href="/admin/lessons" class="action-card">
+                <i class="fas fa-plus-circle"></i>
+                <h3>Manage Lessons</h3>
+                <p>Create and edit lessons</p>
+            </a>
+            <a href="/admin/news" class="action-card">
+                <i class="fas fa-newspaper"></i>
+                <h3>Manage News</h3>
+                <p>Create and edit news articles</p>
+            </a>
+            <a href="/admin/questions" class="action-card">
+                <i class="fas fa-question-circle"></i>
+                <h3>Manage Questions</h3>
+                <p>View and answer student questions</p>
+                <% if (stats.pendingQuestions > 0) { %>
+                <span class="badge"><%= stats.pendingQuestions %></span>
+                <% } %>
+            </a>
+        </div>
+
+        <div class="recent-activity">
+            <div class="activity-section">
+                <h2>Recent Lessons</h2>
+                <div class="activity-list">
+                    <% if (recentLessons && recentLessons.length > 0) { %>
+                        <% recentLessons.forEach(lesson => { %>
+                        <div class="activity-item">
+                            <i class="fas fa-book"></i>
+                            <div>
+                                <p><strong><%= lesson.title %></strong></p>
+                                <small><%= new Date(lesson.createdAt).toLocaleDateString() %></small>
+                            </div>
+                        </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p class="no-content">No recent lessons</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <h2>Recent Questions</h2>
+                <div class="activity-list">
+                    <% if (recentQuestions && recentQuestions.length > 0) { %>
+                        <% recentQuestions.forEach(question => { %>
+                        <div class="activity-item">
+                            <i class="fas fa-question-circle"></i>
+                            <div>
+                                <p><strong><%= question.studentName %></strong></p>
+                                <small><%= question.question.substring(0, 50) %>...</small>
+                            </div>
+                            <span class="status-badge status-<%= question.status %>"><%= question.status %></span>
+                        </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p class="no-content">No recent questions</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

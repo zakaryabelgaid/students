@@ -1,0 +1,63 @@
+<%- include('../partials/header', { title: lesson.title + ' - Teacher Platform', currentPage: 'lessons' }) %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="lesson-detail">
+            <div class="lesson-header">
+                <div class="lesson-badge level-<%= lesson.level %>">
+                    <%= lesson.level === 1 ? 'First Year' : 'Second Year' %>
+                </div>
+                <h1><%= lesson.title %></h1>
+                <p class="lesson-meta">
+                    <span><i class="fas fa-tag"></i> <%= lesson.category %></span>
+                    <span><i class="fas fa-calendar"></i> <%= new Date(lesson.createdAt).toLocaleDateString() %></span>
+                </p>
+            </div>
+
+            <div class="lesson-content">
+                <div class="content-text">
+                    <%= lesson.content.replace(/\n/g, '<br>') %>
+                </div>
+
+                <% if (lesson.files && lesson.files.length > 0) { %>
+                <div class="files-section">
+                    <h3><i class="fas fa-download"></i> Lesson Materials</h3>
+                    <div class="files-grid">
+                        <% lesson.files.forEach(file => { %>
+                        <div class="file-card">
+                            <div class="file-icon">
+                                <% if (file.mimetype.startsWith('image/')) { %>
+                                    <i class="fas fa-image"></i>
+                                <% } else if (file.mimetype === 'application/pdf') { %>
+                                    <i class="fas fa-file-pdf"></i>
+                                <% } else if (file.mimetype.startsWith('video/')) { %>
+                                    <i class="fas fa-video"></i>
+                                <% } else { %>
+                                    <i class="fas fa-file"></i>
+                                <% } %>
+                            </div>
+                            <div class="file-info">
+                                <h4><%= file.originalName %></h4>
+                                <p><%= (file.size / 1024).toFixed(2) %> KB</p>
+                            </div>
+                            <a href="<%= file.path %>" download class="btn btn-sm btn-primary">
+                                <i class="fas fa-download"></i> Download
+                            </a>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="lesson-actions">
+                <a href="/lessons" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Lessons
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+

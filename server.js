@@ -45,6 +45,7 @@ app.use('/lessons', require('./routes/lessons'));
 app.use('/news', require('./routes/news'));
 app.use('/qa', require('./routes/qa'));
 app.use('/admin', require('./routes/admin'));
+app.use('/c-programming', require('./routes/c-programming'));
 
 // Error handling
 app.use((err, req, res, next) => {

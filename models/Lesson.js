@@ -33,6 +33,31 @@ const lessonSchema = new mongoose.Schema({
     trim: true
   },
   files: [fileSchema],
+  // C Programming specific fields
+  codeExamples: [{
+    title: String,
+    code: String,
+    explanation: String,
+    language: { type: String, default: 'c' }
+  }],
+  exercises: [{
+    title: String,
+    description: String,
+    solution: String,
+    difficulty: { type: String, enum: ['easy', 'medium', 'hard'], default: 'medium' }
+  }],
+  estimatedTime: {
+    type: Number, // in minutes
+    default: 30
+  },
+  prerequisites: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Lesson'
+  }],
+  topic: {
+    type: String, // For C Programming: 'variables', 'pointers', etc.
+    trim: true
+  },
   createdAt: {
     type: Date,
     default: Date.now

@@ -27,7 +27,7 @@ exports.getLessonsByLevel = async (req, res) => {
     }
 
     const lessons = await Lesson.find({ level }).sort({ createdAt: -1 });
-    res.render('lessons/level', {
+    res.render('lessons/index', {
       lessons,
       level,
       levelName: level === 1 ? 'First Year' : 'Second Year'

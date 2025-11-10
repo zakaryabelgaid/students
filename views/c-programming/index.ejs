@@ -1,0 +1,122 @@
+<%- include('../partials/header', { title: 'C Programming Curriculum - Teacher Platform', currentPage: 'c-programming' }) %>
+
+<link rel="stylesheet" href="/css/c-programming.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<main class="main-content">
+    <div class="curriculum-container">
+        <!-- Header Section -->
+        <div class="curriculum-header">
+            <div class="header-content">
+                <h1><i class="fas fa-code"></i> C Programming Curriculum</h1>
+                <p class="subtitle">Master C programming from fundamentals to advanced concepts</p>
+                <div class="curriculum-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-book"></i>
+                        <span><%= totalLessons %> Lessons</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span><%= completedLessons %> Completed</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <span>~<%= totalLessons * 30 %> min</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 1: Fundamentals -->
+        <section class="level-section level-1">
+            <div class="level-header">
+                <h2><i class="fas fa-seedling"></i> Level 1: Fundamentals</h2>
+                <p>Build a strong foundation in C programming</p>
+            </div>
+            <div class="lessons-grid">
+                <% level1Lessons.forEach((lesson, index) => { %>
+                <div class="curriculum-card level-1" data-topic="<%= lesson.topic %>">
+                    <div class="card-header">
+                        <div class="lesson-number"><%= index + 1 %></div>
+                        <h3><%= lesson.title %></h3>
+                        <span class="badge beginner">Level 1</span>
+                    </div>
+                    <div class="card-content">
+                        <p><%= lesson.content.substring(0, 100) %>...</p>
+                        <ul class="learning-points">
+                            <% if (lesson.codeExamples && lesson.codeExamples.length > 0) { %>
+                            <li><i class="fas fa-code"></i> <%= lesson.codeExamples.length %> Code Examples</li>
+                            <% } %>
+                            <% if (lesson.exercises && lesson.exercises.length > 0) { %>
+                            <li><i class="fas fa-dumbbell"></i> <%= lesson.exercises.length %> Exercises</li>
+                            <% } %>
+                            <li><i class="fas fa-clock"></i> ~<%= lesson.estimatedTime || 30 %> min</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <div class="progress-bar">
+                            <% const progress = lesson.progress || { status: 'not_started', timeSpent: 0 }; %>
+                            <% const progressPercent = progress.status === 'completed' ? 100 : 
+                                progress.status === 'in_progress' ? 50 : 0; %>
+                            <div class="progress" style="width: <%= progressPercent %>%"></div>
+                        </div>
+                        <a href="/c-programming/<%= lesson.topic %>" class="start-lesson">
+                            <%= progress.status === 'completed' ? 'Review' : 
+                                progress.status === 'in_progress' ? 'Continue' : 'Start Learning' %>
+                        </a>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+
+        <!-- Level 2: Advanced Concepts -->
+        <section class="level-section level-2">
+            <div class="level-header">
+                <h2><i class="fas fa-rocket"></i> Level 2: Advanced Concepts</h2>
+                <p>Master advanced C programming techniques</p>
+            </div>
+            <div class="lessons-grid">
+                <% level2Lessons.forEach((lesson, index) => { %>
+                <div class="curriculum-card level-2" data-topic="<%= lesson.topic %>">
+                    <div class="card-header">
+                        <div class="lesson-number"><%= index + 1 + level1Lessons.length %></div>
+                        <h3><%= lesson.title %></h3>
+                        <span class="badge advanced">Level 2</span>
+                    </div>
+                    <div class="card-content">
+                        <p><%= lesson.content.substring(0, 100) %>...</p>
+                        <ul class="learning-points">
+                            <% if (lesson.codeExamples && lesson.codeExamples.length > 0) { %>
+                            <li><i class="fas fa-code"></i> <%= lesson.codeExamples.length %> Code Examples</li>
+                            <% } %>
+                            <% if (lesson.exercises && lesson.exercises.length > 0) { %>
+                            <li><i class="fas fa-dumbbell"></i> <%= lesson.exercises.length %> Exercises</li>
+                            <% } %>
+                            <li><i class="fas fa-clock"></i> ~<%= lesson.estimatedTime || 30 %> min</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <div class="progress-bar">
+                            <% const progress = lesson.progress || { status: 'not_started', timeSpent: 0 }; %>
+                            <% const progressPercent = progress.status === 'completed' ? 100 : 
+                                progress.status === 'in_progress' ? 50 : 0; %>
+                            <div class="progress" style="width: <%= progressPercent %>%"></div>
+                        </div>
+                        <a href="/c-programming/<%= lesson.topic %>" class="start-lesson">
+                            <%= progress.status === 'completed' ? 'Review' : 
+                                progress.status === 'in_progress' ? 'Continue' : 'Start Learning' %>
+                        </a>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
+<script src="/js/c-programming.js"></script>
+
